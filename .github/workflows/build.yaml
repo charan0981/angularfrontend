@@ -8,7 +8,7 @@ on:
       - 'apps/**'
       - 'libs/**'
       - '.github/workflows/**'
-      - 'angularfrontend/**'  # Correct the path to include angularfrontend
+      - 'angularfrontend/**'  # Ensure this path matches your repo structure
 
 jobs:
   DeployDev:
@@ -18,6 +18,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+
+      - name: List Repository Files (Debug Step)
+        run: |
+          echo "Listing files in the repository"
+          ls -R
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
