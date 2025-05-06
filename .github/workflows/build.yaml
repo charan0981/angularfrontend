@@ -1,0 +1,34 @@
+name: Angular CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/**'
+      - 'libs/**'
+      - '.github/workflows/**'
+      - 'angularfrontend/angular/angular/**'  # Updated path
+
+jobs:
+  DeployDev:
+    name: Build & Push Angular
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Login to Amazon ECR, Build Image, Tag, and Push
+        run: |
+          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 058264124336.dkr.ecr.ap-south-1.amazonaws.com
+          docker build -t angular -f /home/charan/Documents/angularfrontend/angular/angular/Dockerfile /home/charan/Documents/angularfrontend/angular/angular/
+          docker tag angular:latest 058264124336.dkr.ecr.ap-south-1.amazonaws.com/angular:latest
+          docker push 058264124336.dkr.ecr.ap-south-1.amazonaws.com/angular:latest
