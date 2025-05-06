@@ -37,3 +37,7 @@ jobs:
           docker build -t angular -f angular/angular/Dockerfile angular/angular/
           docker tag angular:latest 058264124336.dkr.ecr.ap-south-1.amazonaws.com/angular:latest
           docker push 058264124336.dkr.ecr.ap-south-1.amazonaws.com/angular:latest
+
+      - name: Run Angular Docker Container (Detached)
+        run: |
+          docker run -d --name angular-app -p 80:80 angular:latest
