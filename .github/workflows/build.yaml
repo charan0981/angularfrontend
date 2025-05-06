@@ -8,7 +8,7 @@ on:
       - 'apps/**'
       - 'libs/**'
       - '.github/workflows/**'
-      - 'angularfrontend/angular/angular/**'  # Corrected path for GitHub Actions
+      - 'angularfrontend/**'  # Correct the path to include angularfrontend
 
 jobs:
   DeployDev:
